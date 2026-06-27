@@ -1,114 +1,347 @@
-# Mini Jira - Task Management System
+# Mini Jira - Task Management Backend System
 
-A lightweight task management system built with FastAPI, designed as a simplified version of Jira for managing projects and tasks efficiently.
+A lightweight Jira-inspired task management backend built with FastAPI and PostgreSQL. The system enables organizations to manage projects, tasks, team collaboration, notifications, activity tracking, and reporting through a secure REST API.
 
-## Overview
+## Project Overview
 
-Mini Jira is a RESTful API-based task management application that allows users to create, update, delete, and track tasks and projects. It provides a minimal but functional implementation of core project management features.
+Mini Jira is a backend service designed to support project and task management workflows. It provides authentication, role-based authorization, project management, task assignment, comments, notifications, activity tracking, and reporting features.
+
+### Supported Roles
+
+* **Admin**
+
+  * Manage users
+  * Manage project managers
+  * Access all projects and tasks
+  * Access reports
+
+* **Project Manager**
+
+  * Create and manage projects
+  * Add project members
+  * Create and assign tasks
+  * Track project progress
+  * Generate reports
+
+* **Team Member**
+
+  * View assigned projects and tasks
+  * Update task status
+  * Add comments
+  * Track personal progress
+
+---
 
 ## Features
 
-- **Project Management**: Create and manage multiple projects
-- **Task Management**: Add, update, and track tasks within projects
-- **Task Status Tracking**: Track task progress through different states (TODO, In Progress, Done, etc.)
-- **User Assignment**: Assign tasks to users
-- **Comments & Activity**: Add comments and track activity on tasks
-- **REST API**: Full REST API for all operations
+### Authentication & Authorization
+
+* JWT-based authentication
+* Secure password hashing using bcrypt
+* Role-based access control (RBAC)
+* Protected API routes
+
+### Project Management
+
+* Create, update, and delete projects
+* Assign members to projects
+* Manage project lifecycle
+* Generate project reports
+
+### Task Management
+
+* Create and manage tasks
+* Assign tasks to team members
+* Track task status and priority
+* Due date management
+
+### Collaboration
+
+* Task comments
+* User mentions in comments
+* Team-based project access
+
+### Notifications
+
+* Task assignment notifications
+* User notification center
+* Mark notifications as read
+
+### Activity Tracking
+
+* Project timeline tracking
+* Task activity history
+* Audit trail for major actions
+
+### Reporting & Dashboard
+
+* Project reports
+* User productivity reports
+* Dashboard statistics
+* Recent activity tracking
+
+---
 
 ## Tech Stack
 
-- **Framework**: FastAPI
-- **Python**: 3.8+
-- **Database**: SQLite (or configurable)
-- **Server**: Uvicorn
+* **Backend Framework:** FastAPI
+* **Database:** PostgreSQL
+* **ORM:** SQLAlchemy
+* **Migration Tool:** Alembic
+* **Authentication:** JWT
+* **Password Hashing:** Passlib (bcrypt)
+* **Validation:** Pydantic
+* **ASGI Server:** Uvicorn
+
+---
+
+## Database Design
+
+### Core Tables
+
+* Users
+* Projects
+* Tasks
+* Comments
+* Timeline
+* Notifications
+
+### Association Tables
+
+* Project_Assigned
+* Task_Assigned
+* Comment_Mentions
+* Notification_Assigned
+
+### Key Relationships
+
+* One Manager → Many Projects
+* One Project → Many Tasks
+* One Task → Many Comments
+* Many Users ↔ Many Projects
+* Many Users ↔ Many Tasks
+* Many Users ↔ Many Notifications
+
+---
+
+## Project Structure
+
+```text
+MINI_JIRA/
+│
+├── alembic/
+│   ├── versions/
+│   └── env.py
+│
+├── Backend/
+│   ├── core/
+│   ├── database/
+│   │   ├── base.py
+│   │   ├── connection.py
+│   │   └── session.py
+│   │
+│   ├── models/
+│   ├── schemas/
+│   ├── routes/
+│   ├── services/
+│   ├── dependencies/
+│   └── utils/
+│
+├── .env
+├── alembic.ini
+├── requirements.txt
+└── main.py
+```
+
+---
 
 ## Installation
 
-### Prerequisites
+### Clone Repository
 
-- Python 3.8 or higher
-- pip (Python package manager)
+```bash
+git clone <repository-url>
+cd MINI_JIRA
+```
 
-### Setup
+### Create Virtual Environment
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd Mini_Jira
-   ```
+```bash
+python -m venv venv
+```
 
-2. **Create a virtual environment**
-   ```bash
-   python -m venv venv
-   ```
+### Activate Virtual Environment
 
-3. **Activate the virtual environment**
-   - On Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - On macOS/Linux:
-     ```bash
-     source venv/bin/activate
-     ```
+Windows:
 
-4. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+venv\Scripts\activate
+```
+
+Linux/macOS:
+
+```bash
+source venv/bin/activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL=postgresql+psycopg://postgres:password@localhost:5432/project_task_management_system
+
+SECRET_KEY=your_secret_key
+
+ALGORITHM=HS256
+
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+---
+
+## Database Migration
+
+Initialize Alembic:
+
+```bash
+alembic init alembic
+```
+
+Generate Migration:
+
+```bash
+alembic revision --autogenerate -m "initial migration"
+```
+
+Apply Migration:
+
+```bash
+alembic upgrade head
+```
+
+---
 
 ## Running the Application
-
-To start the development server:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+Application URL:
 
-### API Documentation
-
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-## Project Structure
-
-```
-Mini_Jira/
-├── main.py              # Main application entry point
-├── requirements.txt     # Project dependencies
-├── models/              # Database models
-├── schemas/             # Pydantic schemas for request/response
-├── routes/              # API routes
-├── database.py          # Database configuration
-└── README.md            # This file
+```text
+http://localhost:8000
 ```
 
-## API Endpoints
+---
+
+## API Documentation
+
+Swagger UI:
+
+```text
+http://localhost:8000/docs
+```
+
+ReDoc:
+
+```text
+http://localhost:8000/redoc
+```
+
+---
+
+## Main API Modules
+
+### Authentication
+
+* Signup
+* Login
+* Logout
 
 ### Projects
-- `GET /projects` - List all projects
-- `POST /projects` - Create a new project
-- `GET /projects/{id}` - Get project details
-- `PUT /projects/{id}` - Update a project
-- `DELETE /projects/{id}` - Delete a project
+
+* Create Project
+* Update Project
+* Delete Project
+* Add/Remove Members
+* Project Reports
 
 ### Tasks
-- `GET /tasks` - List all tasks
-- `POST /tasks` - Create a new task
-- `GET /tasks/{id}` - Get task details
-- `PUT /tasks/{id}` - Update a task
-- `DELETE /tasks/{id}` - Delete a task
 
-## Contributing
+* Create Task
+* Assign Task
+* Update Status
+* Delete Task
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Comments
 
-## License
+* Add Comment
+* Edit Comment
+* Delete Comment
+* Mention Users
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Notifications
 
-## Support
+* View Notifications
+* Mark as Read
 
-For questions or issues, please create an issue in the repository.
+### Timeline
+
+* Project Activity History
+* Task Activity History
+
+### Dashboard
+
+* Statistics
+* Recent Activities
+
+### Reports
+
+* Project Reports
+* User Productivity Reports
+* Task Statistics Reports
+
+---
+
+## Business Rules
+
+* Only Admin can create users.
+* Only Admin can assign Project Managers.
+* Project Managers can manage only their projects.
+* Team Members cannot create projects.
+* Team Members cannot assign tasks.
+* Tasks must belong to a project.
+* Users must be project members before task assignment.
+* Completed tasks cannot be reassigned.
+* Deleting a project removes related tasks.
+* Notifications are generated on task assignment.
+
+---
+
+## Future Improvements
+
+* Email notifications
+* File attachments
+* WebSocket-based real-time updates
+* Project analytics dashboard
+* Docker deployment
+* CI/CD integration
+* Unit and Integration Testing
+
+---
+
+## Author
+
+Pramod Shinde
+
+Backend Assessment Project – Mini Jira Task Management System

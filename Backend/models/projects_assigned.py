@@ -1,6 +1,6 @@
-from sqlalchemy  import Column, Integer, SQLEnum, Float, DateTime
+from sqlalchemy  import Column, Integer, Float, DateTime,ForeignKey
 from datetime import datetime
-from databases.base import Base
+from Backend.databases.base import Base
 
 class ProjectAssigned(Base):
     __tablename__="projects_assigned"

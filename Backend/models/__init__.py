@@ -4,7 +4,7 @@ from .tasks import Task
 from .comments import Comment
 from .timeline import Timeline
 from .notifications import Notification
-from .project_assignments import ProjectAssigned
-from .task_assignments import TaskAssigned
-from .comment_mentions import CommentMention
-from .notification_assignments import NotificationAssigned
+from .projects_assigned import ProjectAssigned
+from .tasks_assigned import TaskAssigned
+from .comments_mention import CommentMention
+from .notifications_assigned import NotificationAssigned

@@ -1,1 +1,0 @@
-#auth.py → Login, JWT, password management

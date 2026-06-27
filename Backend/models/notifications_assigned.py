@@ -1,9 +1,9 @@
-from sqlalchemy  import Column, Integer, SQLEnum, Float, DateTime
+from sqlalchemy  import Column, Integer, DateTime,ForeignKey
 from datetime import datetime
-from databases.base import Base
+from Backend.databases.base import Base
 
-class NotificationAssinged(Base):
-    __tablename__=" notifications_assingned"
+class NotificationAssigned(Base):
+    __tablename__="notifications_assigned"
     id=Column(Integer, primary_key=True, autoincrement=True)
     user_id= Column(Integer, ForeignKey("users.id"))
     notification_id=Column(Integer, ForeignKey("notifications.id"))

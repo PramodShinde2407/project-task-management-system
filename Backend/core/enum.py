@@ -18,3 +18,13 @@ class TaskStatus(str,Enum):
     IN_REVIEW="in_review"
     BLOCKED="blocked"
     DONE="done"
+    
+    
+class ProjectStatus(str,Enum):
+    PLANNED="planned"
+    ACTIVE="active"
+    ON_HOLD="on_hold"
+    COMPLETED="completed"
+    CANCELLED="cancelled"
+    
+
