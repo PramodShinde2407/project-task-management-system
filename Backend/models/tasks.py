@@ -1,6 +1,6 @@
 from sqlalchemy  import Column, Integer, Enum, String, DateTime,ForeignKey,Date
 from datetime import datetime
-from Backend.databases.base import Base
+from Backend.database.base import Base
 from ..core.enum import TaskPriority
 from ..core.enum import TaskStatus
 
@@ -10,7 +10,7 @@ class Task(Base):
     title=Column(String)
     description=Column(String)
     priority=Column(Enum(TaskPriority),nullable=False)
-    status=Column(Enum(TaskStatus), nullable=False, default=TODO)
+    status=Column(Enum(TaskStatus), nullable=False, default="TODO")
     due_date=Column(Date)
     project_id=Column(Integer,ForeignKey("projects.id"))
     creator_id=Column(Integer, ForeignKey("users.id"))

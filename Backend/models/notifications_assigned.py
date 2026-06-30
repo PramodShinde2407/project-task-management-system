@@ -1,6 +1,6 @@
 from sqlalchemy  import Column, Integer, DateTime,ForeignKey
 from datetime import datetime
-from Backend.databases.base import Base
+from Backend.database.base import Base
 
 class NotificationAssigned(Base):
     __tablename__="notifications_assigned"

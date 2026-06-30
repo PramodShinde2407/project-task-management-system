@@ -1,6 +1,6 @@
 from sqlalchemy  import Column, Integer, Float, DateTime,ForeignKey
 from datetime import datetime
-from Backend.databases.base import Base
+from Backend.database.base import Base
 
 class TaskAssigned(Base):
     __tablename__="tasks_assigned"

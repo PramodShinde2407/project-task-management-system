@@ -1,6 +1,6 @@
 from sqlalchemy  import Column, Integer, Float, DateTime,ForeignKey, String
 from datetime import datetime
-from Backend.databases.base import Base
+from Backend.database.base import Base
 
 class Timeline(Base):
     __tablename__="timeline"

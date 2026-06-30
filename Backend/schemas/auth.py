@@ -12,3 +12,9 @@ class LoginResponse(BaseModel):
     access_token:str
     token_type:str
     user:UserOut     #frontend immediately know who logged in.-because this response is send by  server to client i.e to frontend so no need to give extra get req for who loged in
+
+class UserRegister(BaseModel):
+    name: str
+    username: str
+    email: EmailStr
+    password: str

@@ -32,3 +32,15 @@ class TaskUpdate(BaseModel):
     priority:Optional[TaskPriority]=None
     due_date:Optional[date]=None
     status:Optional[TaskStatus]=None
+    
+
+
+class TaskStatusUpdate(BaseModel):
+    status: TaskStatus
+
+
+class TaskPriorityUpdate(BaseModel):
+    priority: TaskPriority
+
+class TaskAssign(BaseModel):
+    user_id: int = Field(..., gt=0)
